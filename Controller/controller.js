@@ -1,3 +1,4 @@
+const {Doctor, User, Article, AskSuggestion, ProfileDoctor} = require('../models')
 class Controller{
     static landingpage(req,res){
         try {
@@ -73,6 +74,64 @@ class Controller{
             //({where:{name:req.nody.name,role}})
             
             res.send(req.body)
+            
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
+    static async pageDoctor(req, res){
+        try {
+            // console.log(req.user);
+            // const {id} = req.user
+
+            let data = await Doctor.findByPk(1,{
+                include:{
+                    model : AskSuggestion,
+                    where :{
+                        suggestion:null
+                    },
+                    include:{
+                        model: User,
+                        
+                    }
+                }
+            })
+            if (data === null) {
+                data = await Doctor.findByPk(1)
+            }
+            // console.log(data);
+            // res.send(data)
+            res.render("pageDoctor",{data,title : `page Doctor`})
+        } catch (error) {
+            res.send(error.message)
+        }
+    }
+    static async postSaran(req, res){
+        try {
+            const {suggestion, id} = req.body
+            // console.log(req.body);
+            await AskSuggestion.update({suggestion},
+                {
+                    where:{
+                    id: id
+                }
+            }
+            )
+            res.redirect(`/doctor`)
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async formAddArticle(req,res){
+        try {
+            res.render("formAddArticle", {title:`Form Add Article`})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async postAddArticle(req,res){
+        try {
             
         } catch (error) {
             res.send(error)

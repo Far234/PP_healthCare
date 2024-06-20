@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      AskSuggestion.belongsTo(models.Doctor)
+      AskSuggestion.belongsTo(models.User)
     }
   }
   AskSuggestion.init({
