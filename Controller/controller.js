@@ -38,7 +38,6 @@ class Controller{
             const {name,email,password,role} = req.body
 
             await User.create({name,email,password,role})
-
             res.redirect("/login")
 
             
@@ -61,8 +60,9 @@ class Controller{
         try {
             const {name,email,password,role} = req.body
 
-            await Doctor.create({name,role,email,password})
+            let data = await Doctor.create({name,role,email,password})
 
+            await ProfileDoctor.create({DoctorId:data.id})
             res.redirect("/login")
             
         } catch (error) {
@@ -259,6 +259,32 @@ class Controller{
             res.redirect("/doctor/myArticle")
         } catch (error) {
             console.log(error);
+            res.send(error)
+        }
+    }
+    static async showProfile(req,res){
+        try {
+            const {doctorid} = req.session
+            let data = await ProfileDoctor.findAll({
+                where:{
+                    DoctorId:doctorid
+                }
+            })
+            // res.send(data)
+            if (data.length === 1) {
+                res.render("pageProfile", {title:`Page Profile`})
+            }else{
+                res.send(`tidak ditemukan`)
+            }
+        } catch (error) {
+            console.log(error);
+            res.send(error)
+        }
+    }
+    static async addProfile(req, res){
+        try {
+            res.render("addProfile", {title:`form Add Profile`})
+        } catch (error) {
             res.send(error)
         }
     }
