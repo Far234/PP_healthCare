@@ -28,6 +28,10 @@ router.get("/doctor",Controller.pageDoctor)
 router.post("/doctor", Controller.postSaran)
 router.get("/doctor/addArticle", Controller.formAddArticle)
 router.post("/doctor/addArticle", Controller.postAddArticle)
+router.get("/doctor/myArticle", Controller.showMyArticle)
+router.get("/doctor/article/edit/:id", Controller.formEditArticle)
+router.post("/doctor/article/edit/:id", Controller.postEditArticle)
+router.get("/doctor/article/delete/:id", Controller.deleteArticle)
 
 
 

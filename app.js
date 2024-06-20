@@ -10,8 +10,7 @@ app.use(session({
     secret:'secrettt',
     resave: false,
     saveUninitialized:false,
-    cookie:{secure:false,
-        sameSite:true}
+    cookie:{secure:false}
     }))
     
 app.use('/',require("./router/routers.js"))
