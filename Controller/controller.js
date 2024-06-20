@@ -114,7 +114,7 @@ class Controller{
                     if (checkvalid === true) {
                         req.sessions.patientid = data.id
                         
-                        res.redirect("/ user")
+                        res.redirect("/user")
 
                         // res.send("login completed")
                     }else{
@@ -145,6 +145,7 @@ class Controller{
             }
             
         } catch (error) {
+            console.log(error);
             res.send(error)
         }
     }
@@ -318,6 +319,15 @@ class Controller{
             })
             res.redirect("/doctor")
         } catch (error) {
+            res.send(error)
+        }
+    }
+    static async landingUser(req,res){
+        try {
+            let data = Article.findAll()
+            res.send("landingUser", {title:`Landing Page User`})
+        } catch (error) {
+            console.log(error);
             res.send(error)
         }
     }
