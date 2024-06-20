@@ -1,9 +1,21 @@
 const express = require('express')
 const Controller = require('../Controller/controller')
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+const upload = multer({storage:storage})
 const router = express()
 
 
 router.get("/",Controller.landingpage)
+
+router.get("/tes",Controller.tes)
 
 
 router.get("/register",Controller.registeras)
@@ -32,6 +44,8 @@ const user = function(req, res, next) {
         res.redirect(`/login?err=${err}`)
     }
 }
+
+
 
 const doctor = function(req, res, next) {
     console.log('Time:', Date.now())
@@ -74,7 +88,6 @@ router.post("/doctor/article/edit/:id",doctor, Controller.postEditArticle)
 router.get("/doctor/article/delete/:id",doctor, Controller.deleteArticle)
 router.post("/user/role",user,Controller.postAskUser)
 router.get("/user/:role",user, Controller.formAskUser)
-
 
 
 
