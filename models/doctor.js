@@ -22,8 +22,19 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     role: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
+    password: {
+      type:DataTypes.STRING,
+      validate:{
+        smallchar(value){
+          if (value.length < 6) {
+            throw new Error("password harus lebih dari 6 huruf")
+          }
+        }
+      }
+    }
+  }, 
+  
+  {
     sequelize,
     modelName: 'Doctor',
     hooks:{
