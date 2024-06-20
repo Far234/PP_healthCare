@@ -66,8 +66,8 @@ router.post("/doctor/profileEdit", Controller.postEditProfile)
 
 router.get("/user",user, Controller.landingUser)
 
-router.get("/user/ask")
-router.post("/user/ask")
+// router.get("/user/ask")
+// router.post("/user/ask")
 router.get("/doctor/article/edit/:id", Controller.formEditArticle)
 router.post("/doctor/article/edit/:id", Controller.postEditArticle)
 
