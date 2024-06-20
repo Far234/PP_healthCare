@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <script src="https://www.lactame.com/lib/image-js/0.21.2/image.min.js"></script>
+  </head>
+
+  <body>
+    <img id="result" />
+
+    <script>
+      async function process() {
+        let image = await IJS.Image.load("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1");
+
+        let grey = image.grey().resize({ width: 600 });
+
+        document.getElementById('result').src = grey.toDataURL();
+      }
+      process();
+    </script>
+  </body>
+</html>

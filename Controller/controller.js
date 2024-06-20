@@ -14,6 +14,15 @@ class Controller{
         }
     }
 
+    static tes(req,res){
+        try {
+            res.render("tes")
+
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
     static registeras(req,res){
         try {
             res.render("registeras")
@@ -114,7 +123,7 @@ class Controller{
                     if (checkvalid === true) {
                         req.sessions.patientid = data.id
                         
-                        res.redirect("/ user")
+                        res.redirect("/user")
 
                         // res.send("login completed")
                     }else{

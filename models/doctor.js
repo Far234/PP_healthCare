@@ -19,9 +19,31 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Doctor.init({
-    name: DataTypes.STRING,
-    role: DataTypes.STRING,
-    email: DataTypes.STRING,
+    name: {
+      type:DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          msg:"nama tidak boleh kosong"
+        }
+      }},
+    role: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          msg:"Role tidak boleh kosong"
+        },
+        notNull:{
+          msg:"Role tidak boleh kosong"
+        }
+      }},
+    email: {
+      type:DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          msg:"email tidak boleh kosong"
+        }
+      }},
     password: {
       type:DataTypes.STRING,
       validate:{

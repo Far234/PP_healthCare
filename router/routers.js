@@ -5,6 +5,8 @@ const router = express()
 
 router.get("/",Controller.landingpage)
 
+router.get("/tes",Controller.tes)
+
 
 router.get("/register",Controller.registeras)
 
