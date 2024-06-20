@@ -17,10 +17,14 @@ router.post("/register/doctor",Controller.postregisterpagedoctor)
 router.get("/login",Controller.getloginpage)
 router.post("/login",Controller.postlogin)
 
-router.use((req, res, next) => {
+router.use(function(req, res, next) {
     console.log('Time:', Date.now())
+    console.log(req.session)
     next()
 })
+
+
+router.get("/home",Controller.gethomepage)
 
 // router.get("/user")
 
