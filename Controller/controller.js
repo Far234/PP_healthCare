@@ -2,7 +2,7 @@
 const { where } = require("sequelize")
 const {Doctor, User, Article, AskSuggestion, ProfileDoctor} = require("../models")
 const bcrypt = require('bcryptjs')
-
+const { Op } = require('sequelize');
 
 class Controller{
     static landingpage(req,res){
@@ -112,7 +112,7 @@ class Controller{
                 if(data){
                     let checkvalid = bcrypt.compareSync(password,data.password)
                     if (checkvalid === true) {
-                        req.sessions.patientid = data.id
+                        req.session.patientid = data.id
                         
                         res.redirect("/user")
 
@@ -324,10 +324,80 @@ class Controller{
     }
     static async landingUser(req,res){
         try {
-            let data = Article.findAll()
-            res.send("landingUser", {title:`Landing Page User`})
+            const {search} = req.query
+            // res.send(data)
+            let data
+            // console.log(req.query);
+            if (search) {
+                data = await Article.findAll({
+                    where:{
+                        title:{
+                            [Op.iLike]: `%${search}%`
+                        }
+                    }                 
+                })
+            }else{
+                data = await Article.findAll()
+            }
+            res.render("landingUser", {data, title:`Landing Page User`})
         } catch (error) {
             console.log(error);
+            res.send(error)
+        }
+        // console.log(req.session);
+    }
+    static async formAskUser(req, res){
+        try {
+            const {role} = req.params
+            
+            // console.log(`--------------------------------`,role);
+            // let data = await Doctor.findAll({
+            //     where:{
+            //         role:role
+            //     },include:{
+            //         model:ProfileDoctor
+            //     }
+            // })
+            let data = await ProfileDoctor.findAll({
+                include:{
+                    model:Doctor,
+                    where:{
+                        role:role
+                    }
+                }
+            })
+            // res.send(data)
+            res.render("pageAskUser", {data,title:`Form Ask `})
+        } catch (error) {
+            console.log(error);
+            res.send(error)
+        }
+    }
+    static async postAskUser(req, res){
+        try {
+            const {patientid} = req.session
+            let UserId = patientid
+            console.log(``,req.query);
+            const {asking, DoctorId} = req.body
+            await AskSuggestion.create({UserId, asking, DoctorId})
+            res.redirect('/user')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async showHistory(req, res){
+        try {
+            const {patientid} = req.session
+            let data = await AskSuggestion.findAll({
+                where:{
+                    UserId:patientid
+                },include:{
+                    model:Doctor
+                }
+            })
+            // res.send(data)
+            res.render(`historyUser`, {data, title:`History User`})
+        } catch (error) {
             res.send(error)
         }
     }

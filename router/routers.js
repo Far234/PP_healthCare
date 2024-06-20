@@ -59,19 +59,23 @@ router.post("/doctor",doctor, Controller.postSaran)
 router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
 router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
-router.get("/doctor/myArticle", Controller.showMyArticle)
+router.get("/doctor/myArticle",doctor, Controller.showMyArticle)
 
-router.get("/doctor/profileEdit", Controller.showEditProfile)
-router.post("/doctor/profileEdit", Controller.postEditProfile)
+router.get("/doctor/profileEdit", doctor,Controller.showEditProfile)
+router.post("/doctor/profileEdit",doctor, Controller.postEditProfile)
 
 router.get("/user",user, Controller.landingUser)
 
-// router.get("/user/ask")
-// router.post("/user/ask")
-router.get("/doctor/article/edit/:id", Controller.formEditArticle)
-router.post("/doctor/article/edit/:id", Controller.postEditArticle)
+router.get("/user/history",user, Controller.showHistory)
 
-router.get("/doctor/article/delete/:id", Controller.deleteArticle)
+router.get("/doctor/article/edit/:id",doctor, Controller.formEditArticle)
+router.post("/doctor/article/edit/:id",doctor, Controller.postEditArticle)
+
+router.get("/doctor/article/delete/:id",doctor, Controller.deleteArticle)
+router.post("/user/role",user,Controller.postAskUser)
+router.get("/user/:role",user, Controller.formAskUser)
+
+
 
 
 
