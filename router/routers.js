@@ -17,24 +17,57 @@ router.post("/register/doctor",Controller.postregisterpagedoctor)
 router.get("/login",Controller.getloginpage)
 router.post("/login",Controller.postlogin)
 
-router.use(function(req, res, next) {
+router.get("/logout",Controller.logout)
+
+
+
+const user = function(req, res, next) {
+    console.log('Time:', Date.now())
+    // console.log(req.session)
+    if (req.session.patientid) {
+        next()
+    }
+    else{
+        let err = "login first"
+        res.redirect(`/login?err=${err}`)
+    }
+}
+
+const doctor = function(req, res, next) {
     console.log('Time:', Date.now())
     console.log(req.session)
-    next()
-})
+    if (req.session.doctorid && req.session.role) {
+        next()
+    }
+    else{
+        let err = "login first"
+        res.redirect(`/login?err=${err}`)
+    }
+}
 
+
+router.get("/doctor",doctor,Controller.pageDoctor)
+router.post("/doctor",doctor, Controller.postSaran)
+
+
+router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
+router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
 router.get("/doctor",Controller.pageDoctor)
 router.post("/doctor", Controller.postSaran)
+
 router.get("/doctor/addArticle", Controller.formAddArticle)
 router.post("/doctor/addArticle", Controller.postAddArticle)
+
 router.get("/doctor/myArticle", Controller.showMyArticle)
+
 router.get("/doctor/profile", Controller.showProfile)
 router.get("/doctor/profile/add", Controller.addProfile)
+
 router.get("/doctor/article/edit/:id", Controller.formEditArticle)
 router.post("/doctor/article/edit/:id", Controller.postEditArticle)
-router.get("/doctor/article/delete/:id", Controller.deleteArticle)
 
+router.get("/doctor/article/delete/:id", Controller.deleteArticle)
 
 
 // router.get("/user")

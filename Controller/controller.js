@@ -36,8 +36,9 @@ class Controller{
         try {
             // console.log(req.body)
             const {name,email,password,role} = req.body
-
+            
             await User.create({name,email,password,role})
+
             res.redirect("/login")
 
             
@@ -90,6 +91,10 @@ class Controller{
             //({where:{name:req.nody.name,role}})
             
             const {name,password,role} = req.body
+            if (name || password || role === undefined) {
+                let err = "incomplete input please check again"
+                res.redirect(`/login?err=${err}`)
+            }
             // console.log(req.body)
 
             if (role === "Patient") {
@@ -104,7 +109,8 @@ class Controller{
                     if (checkvalid === true) {
                         req.sessions.patientid = data.id
                         
-                        res.redirect("/user")
+                        res.redirect("/ user")
+
                         // res.send("login completed")
                     }else{
                         res.redirect(`/login?err=${err}`)
@@ -122,6 +128,8 @@ class Controller{
                     let checkvalid = bcrypt.compareSync(password,data.password)
                     if (checkvalid === true) {
                         req.session.doctorid = data.id
+                        req.session.role = role
+
                         res.redirect("/doctor")
                         // res.send("login completed")
                     }
@@ -135,6 +143,22 @@ class Controller{
             console.log(error)
             res.send(error)
         }
+    }
+
+    static logout(req,res){
+        try {
+            req.session.destroy((err => {
+                if(err){
+                    res.redirect("/login")
+                }
+                else{
+                    res.redirect("/login")
+                }
+            }))
+        } catch (error) {
+            res.send(error)
+        }
+
     }
 
 
