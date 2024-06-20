@@ -53,11 +53,11 @@ router.post("/doctor",doctor, Controller.postSaran)
 router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
 router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
-router.get("/doctor",Controller.pageDoctor)
-router.post("/doctor", Controller.postSaran)
+router.get("/doctor",doctor,Controller.pageDoctor)
+router.post("/doctor",doctor, Controller.postSaran)
 
-router.get("/doctor/addArticle", Controller.formAddArticle)
-router.post("/doctor/addArticle", Controller.postAddArticle)
+router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
+router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
 router.get("/doctor/myArticle", Controller.showMyArticle)
 

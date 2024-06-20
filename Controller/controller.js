@@ -36,6 +36,7 @@ class Controller{
         try {
             // console.log(req.body)
             const {name,email,password,role} = req.body
+            const { err } = req.query
             
             await User.create({name,email,password,role})
 
@@ -53,7 +54,10 @@ class Controller{
             res.render("register_doctor")
             
         } catch (error) {
-            res.send(error)
+            if (error.name === "SequelizeValidationError") {
+                let err = error.errors
+                res.redirect(`/register/doctor?err=${err}`)
+            }
         }
     }
 
@@ -78,6 +82,7 @@ class Controller{
             
         } catch (error) {
             res.send(error)
+
         }
     }
 
@@ -91,7 +96,7 @@ class Controller{
             //({where:{name:req.nody.name,role}})
             
             const {name,password,role} = req.body
-            if (name || password || role === undefined) {
+            if (name === undefined) {
                 let err = "incomplete input please check again"
                 res.redirect(`/login?err=${err}`)
             }
@@ -140,7 +145,6 @@ class Controller{
             }
             
         } catch (error) {
-            console.log(error)
             res.send(error)
         }
     }
@@ -301,7 +305,6 @@ class Controller{
                 res.send(`tidak ditemukan`)
             }
         } catch (error) {
-            console.log(error);
             res.send(error)
         }
     }
