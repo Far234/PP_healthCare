@@ -24,7 +24,12 @@ router.use(function(req, res, next) {
 })
 
 
-router.get("/home",Controller.gethomepage)
+router.get("/doctor",Controller.pageDoctor)
+router.post("/doctor", Controller.postSaran)
+router.get("/doctor/addArticle", Controller.formAddArticle)
+router.post("/doctor/addArticle", Controller.postAddArticle)
+
+
 
 // router.get("/user")
 

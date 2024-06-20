@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Doctor.hasMany(models.Article)
+      Doctor.hasMany(models.AskSuggestion)
+      Doctor.hasMany(models.ProfileDoctor)
     }
   }
   Doctor.init({
