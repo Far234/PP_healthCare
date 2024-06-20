@@ -17,15 +17,19 @@ router.post("/register/doctor",Controller.postregisterpagedoctor)
 router.get("/login",Controller.getloginpage)
 router.post("/login",Controller.postlogin)
 
-router.use((req, res, next) => {
+router.use(function(req, res, next) {
     console.log('Time:', Date.now())
+    console.log(req.session)
     next()
 })
+
 
 router.get("/doctor",Controller.pageDoctor)
 router.post("/doctor", Controller.postSaran)
 router.get("/doctor/addArticle", Controller.formAddArticle)
 router.post("/doctor/addArticle", Controller.postAddArticle)
+
+
 
 // router.get("/user")
 

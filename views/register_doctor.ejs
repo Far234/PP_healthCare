@@ -34,17 +34,16 @@
 
             <div class="form-check">
                 <label for="inputState">Role</label>
-                <select id="inputState" class="form-control" name="doctorId">
+                <select id="inputState" class="form-control" name="role">
                 <option disabled selected>Choose...</option>
-                <option value="1">Specialistone</option>
-                <option value="2">Specialisttwo</option>
-                <option value="3">Specialistthree</option>
+                <% ["Gigi","THT","Kulit"].forEach(element => { %>
+                    <option value="<%= element %>"><%= element %></option>
+                <% }) %>
                 </select>
             </div><br><br>
 
-
-
-            <button type="submit" name="role" value="Doctor">Register</button>
+            
+            <button type="submit">Register</button>
         </form>
 
     </div>
