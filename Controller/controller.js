@@ -284,33 +284,39 @@ class Controller{
                     id:id
                 }
             })
+            
             res.redirect("/doctor/myArticle")
         } catch (error) {
             console.log(error);
             res.send(error)
         }
     }
-    static async showProfile(req,res){
+    static async showEditProfile(req,res){
         try {
             const {doctorid} = req.session
-            let data = await ProfileDoctor.findAll({
+            let data = await Doctor.findAll({
                 where:{
-                    DoctorId:doctorid
+                    id:doctorid
+                },include:{
+                    model:ProfileDoctor
                 }
             })
             // res.send(data)
-            if (data.length === 1) {
-                res.render("pageProfile", {title:`Page Profile`})
-            }else{
-                res.send(`tidak ditemukan`)
-            }
+                res.render("editProfile", {data, title:`Page Profile`})
         } catch (error) {
             res.send(error)
         }
     }
-    static async addProfile(req, res){
+    static async postEditProfile(req, res){
         try {
-            res.render("addProfile", {title:`form Add Profile`})
+            const {doctorid} = req.session
+            const {name, age, description, profilePicture} = req.body
+            await ProfileDoctor.update({name, age, description, profilePicture},{
+                where:{
+                    DoctorId:doctorid
+                }
+            })
+            res.redirect("/doctor")
         } catch (error) {
             res.send(error)
         }
