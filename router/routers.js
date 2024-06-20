@@ -17,10 +17,10 @@ router.post("/register/doctor",Controller.postregisterpagedoctor)
 router.get("/login",Controller.getloginpage)
 router.post("/login",Controller.postlogin)
 
-// router.use((req, res, next) => {
-//     console.log('Time:', Date.now())
-//     next()
-// })
+router.use((req, res, next) => {
+    console.log('Time:', Date.now())
+    next()
+})
 
 router.get("/doctor",Controller.pageDoctor)
 router.post("/doctor", Controller.postSaran)
