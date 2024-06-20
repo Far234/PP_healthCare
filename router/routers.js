@@ -45,7 +45,6 @@ const user = function(req, res, next) {
     }
 }
 
-router.get("/user",user, Controller.landingUser)
 
 
 const doctor = function(req, res, next) {
@@ -76,16 +75,20 @@ router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
 router.get("/doctor/myArticle",doctor, Controller.showMyArticle)
 
-router.get("/doctor/profileEdit",doctor, Controller.showEditProfile)
+router.get("/doctor/profileEdit", doctor,Controller.showEditProfile)
 router.post("/doctor/profileEdit",doctor, Controller.postEditProfile)
 
+router.get("/user",user, Controller.landingUser)
 
-// router.get("/user/ask")
-// router.post("/user/ask")
+router.get("/user/history",user, Controller.showHistory)
+
 router.get("/doctor/article/edit/:id",doctor, Controller.formEditArticle)
 router.post("/doctor/article/edit/:id",doctor, Controller.postEditArticle)
 
 router.get("/doctor/article/delete/:id",doctor, Controller.deleteArticle)
+router.post("/user/role",user,Controller.postAskUser)
+router.get("/user/:role",user, Controller.formAskUser)
+
 
 
 

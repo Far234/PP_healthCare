@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <%- include('_css') %>
+</head>
+
+<body>
+    <%- include('_navbarUser') %>
+        <div style="margin: 40px 250px;">
+            <form method="post" action="/user/role">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Keluhan</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        name="asking">
+                </div>
+                <p style="margin: 20px 50px; font-size: 35px; text-align: center;">Pilih Dokter</p>
+                <div class="d-flex flex-wrap justify-content-center">
+                    <% data.forEach(el=>{%>
+                        <div>
+                            <div class="card" style="width: 20rem; margin-right: 40px; margin-bottom: 40px;">
+                                <img src="<%= el.profilePicture %>" class="card-img-top" alt="<%= el.name %>">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= el.name %>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">
+                                        <%= el.Doctor.role %>
+                                    </h6>
+                                    <p class="card-text">
+                                        <%= el.description %>
+                                    </p>
+
+                                    <a href="/user/?DoctorId=<% el.Doctor.id %>" class="btn btn-primary"><button type="submit"
+                                            class="btn btn-primary">Submit</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        <%}) %>
+                </div>
+
+
+            </form>
+        </div>
+        <%- include('_body') %>
+</body>
+
+</html>
