@@ -49,9 +49,25 @@ const doctor = function(req, res, next) {
 router.get("/doctor",doctor,Controller.pageDoctor)
 router.post("/doctor",doctor, Controller.postSaran)
 
+
 router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
 router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
+router.get("/doctor",Controller.pageDoctor)
+router.post("/doctor", Controller.postSaran)
+
+router.get("/doctor/addArticle", Controller.formAddArticle)
+router.post("/doctor/addArticle", Controller.postAddArticle)
+
+router.get("/doctor/myArticle", Controller.showMyArticle)
+
+router.get("/doctor/profile", Controller.showProfile)
+router.get("/doctor/profile/add", Controller.addProfile)
+
+router.get("/doctor/article/edit/:id", Controller.formEditArticle)
+router.post("/doctor/article/edit/:id", Controller.postEditArticle)
+
+router.get("/doctor/article/delete/:id", Controller.deleteArticle)
 
 
 // router.get("/user")
