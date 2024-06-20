@@ -1,5 +1,15 @@
 const express = require('express')
 const Controller = require('../Controller/controller')
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+const upload = multer({storage:storage})
 const router = express()
 
 
@@ -35,6 +45,9 @@ const user = function(req, res, next) {
     }
 }
 
+router.get("/user",user, Controller.landingUser)
+
+
 const doctor = function(req, res, next) {
     console.log('Time:', Date.now())
     console.log(req.session)
@@ -61,15 +74,19 @@ router.post("/doctor",doctor, Controller.postSaran)
 router.get("/doctor/addArticle",doctor, Controller.formAddArticle)
 router.post("/doctor/addArticle",doctor, Controller.postAddArticle)
 
-router.get("/doctor/myArticle", Controller.showMyArticle)
+router.get("/doctor/myArticle",doctor, Controller.showMyArticle)
 
-router.get("/doctor/profileEdit", Controller.showEditProfile)
-router.post("/doctor/profileEdit", Controller.postEditProfile)
+router.get("/doctor/profileEdit",doctor, Controller.showEditProfile)
+router.post("/doctor/profileEdit",doctor, Controller.postEditProfile)
 
-router.get("/doctor/article/edit/:id", Controller.formEditArticle)
-router.post("/doctor/article/edit/:id", Controller.postEditArticle)
 
-router.get("/doctor/article/delete/:id", Controller.deleteArticle)
+// router.get("/user/ask")
+// router.post("/user/ask")
+router.get("/doctor/article/edit/:id",doctor, Controller.formEditArticle)
+router.post("/doctor/article/edit/:id",doctor, Controller.postEditArticle)
+
+router.get("/doctor/article/delete/:id",doctor, Controller.deleteArticle)
+
 
 
 // router.get("/user")

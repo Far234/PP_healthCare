@@ -16,7 +16,8 @@ class Controller{
 
     static tes(req,res){
         try {
-            res.render("tes")
+            let data = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1"
+            res.render("tes",{data})
 
         } catch (error) {
             res.send(error)
@@ -34,10 +35,13 @@ class Controller{
 
     static getregisterpage(req,res){
         try {
-            res.render("register")
+            const { err } = req.query
+
+            res.render("register",{err})
             
         } catch (error) {
             res.send(error)
+
         }
     }
 
@@ -45,28 +49,35 @@ class Controller{
         try {
             // console.log(req.body)
             const {name,email,password,role} = req.body
-            const { err } = req.query
+            
+            
+            console.log(req.file.path)
             
             await User.create({name,email,password,role})
 
-            res.redirect("/login")
+            res.redirect("/login",{err})
 
             
         } catch (error) {
-            res.send(error)
+            if (error.name === "SequelizeValidationError") {
+                let data = error.errors.map(r => {
+                    return r.message
+                 }).join(",")
+
+                res.redirect(`/register/patient?err=${data}`)
+            }
         }
-    }
+    }       
 
     static getregisterpagedoctor(req,res){
         try {
             // let data = Doctor.findAll()
-            res.render("register_doctor")
+            const { err } = req.query
+
+            res.render("register_doctor",{err})
             
         } catch (error) {
-            if (error.name === "SequelizeValidationError") {
-                let err = error.errors
-                res.redirect(`/register/doctor?err=${err}`)
-            }
+            res.send(error)
         }
     }
 
@@ -80,9 +91,17 @@ class Controller{
             res.redirect("/login")
             
         } catch (error) {
-            res.send(error)
+            if (error.name === "SequelizeValidationError") {
+                let data = error.errors.map(r => {
+                    return r.message
+                 }).join(",")
+
+
+                res.redirect(`/register/doctor?err=${data}`)
+            }
         }
     }
+    
 
     static getloginpage(req,res){
         try {
@@ -121,7 +140,7 @@ class Controller{
                 if(data){
                     let checkvalid = bcrypt.compareSync(password,data.password)
                     if (checkvalid === true) {
-                        req.sessions.patientid = data.id
+                        req.session.patientid = data.id
                         
                         res.redirect("/user")
 
@@ -154,6 +173,7 @@ class Controller{
             }
             
         } catch (error) {
+            console.log(error);
             res.send(error)
         }
     }
@@ -320,13 +340,24 @@ class Controller{
         try {
             const {doctorid} = req.session
             const {name, age, description, profilePicture} = req.body
-            await ProfileDoctor.update({name, age, description, profilePicture},{
+            // const filepath = req.file.path
+            // console.log(filepath)
+            await ProfileDoctor.update({name, age, description,profilePicture},{
                 where:{
                     DoctorId:doctorid
                 }
             })
             res.redirect("/doctor")
         } catch (error) {
+            res.send(error)
+        }
+    }
+    static async landingUser(req,res){
+        try {
+            let data = Article.findAll()
+            res.render("landingUser", {title:`Landing Page User`})
+        } catch (error) {
+            console.log(error);
             res.send(error)
         }
     }

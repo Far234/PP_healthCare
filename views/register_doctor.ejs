@@ -13,6 +13,11 @@
     <div class="container">
         <a href="/register"><button>back</button></a>
     </div>
+    <div class="container">
+        <% if (err) { %>
+         <p style="color: red;"><%= err %></p>
+        <% } %>
+    </div>
     <div class="container mt-3">
 
         <form action="/register/doctor" method="post">

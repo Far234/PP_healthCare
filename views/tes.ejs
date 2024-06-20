@@ -4,13 +4,16 @@
   </head>
 
   <body>
-    <img id="result" />
+    <img id="color" src="<%= data %>" style="display: none;"/>
+
+    
+    <img id="result" /> 
 
     <script>
       async function process() {
-        let image = await IJS.Image.load("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1");
+        let image = await IJS.Image.load(document.getElementById('color').src);
 
-        let grey = image.grey().resize({ width: 600 });
+        let grey = image.grey().resize({ width: 400 });
 
         document.getElementById('result').src = grey.toDataURL();
       }
