@@ -12,9 +12,14 @@
     </div>
     <div class="container">
         <a href="/"><button>Cancel</button></a>
+    </div><br>
+    <div class="container">
+        <% if (err) { %>
+            <p style="color: red; background-color: black;"><%= err %></p>
+        <% } %>
     </div>
     <div class="container">
-        <form action="/login">
+        <form action="/login" method="post">
 
             <div class="form-group">
                 <label for="inputname">Name</label>
