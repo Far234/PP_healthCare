@@ -64,10 +64,15 @@ router.get("/doctor/myArticle", Controller.showMyArticle)
 router.get("/doctor/profileEdit", Controller.showEditProfile)
 router.post("/doctor/profileEdit", Controller.postEditProfile)
 
+router.get("/user",user, Controller.landingUser)
+
+// router.get("/user/ask")
+// router.post("/user/ask")
 router.get("/doctor/article/edit/:id", Controller.formEditArticle)
 router.post("/doctor/article/edit/:id", Controller.postEditArticle)
 
 router.get("/doctor/article/delete/:id", Controller.deleteArticle)
+
 
 
 // router.get("/user")
