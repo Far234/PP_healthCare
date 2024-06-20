@@ -13,7 +13,7 @@
 <body>
     <%- include('_navbarDoctor') %>
     <% if (data.AskSuggestions === undefined) {%>
-        <h3>Lagi gaada yang nanya bang hehe</h3>
+        <h3 style="text-align: center;">Lagi gaada yang nanya bang hehe</h3>
         <%}else{%>
         <div style="margin: 20px 120px;">
             <table class="table">
@@ -51,6 +51,16 @@
                             <%} %>
                 </tbody>
             </table>
+        </div>
+        <div>
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
         </div>
         <%- include('_body') %>
 </body>
