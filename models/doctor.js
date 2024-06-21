@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       Doctor.hasMany(models.AskSuggestion)
       Doctor.hasMany(models.ProfileDoctor)
     }
+    get doctorfront(){
+      return `Doctor ${this.name}`
+    }
+
   }
   Doctor.init({
     name: {

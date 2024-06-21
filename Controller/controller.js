@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize');
 
 class Controller{
-    static landingpage(req,res){
+    static async landingpage(req,res){
         try {
             res.render("landingPage")
             
@@ -24,7 +24,7 @@ class Controller{
         }
     }
 
-    static registeras(req,res){
+    static async registeras(req,res){
         try {
             res.render("registeras")
             
@@ -33,7 +33,7 @@ class Controller{
         }
     }
 
-    static getregisterpage(req,res){
+    static async getregisterpage(req,res){
         try {
             const { err } = req.query
 
@@ -50,12 +50,11 @@ class Controller{
             // console.log(req.body)
             const {name,email,password,role} = req.body
             
+            // console.log(req.file.path)
             
-            console.log(req.file.path)
-            
-            await User.create({name,email,password,role})
+            await User.createuser(name,email,password,role)
 
-            res.redirect("/login",{err})
+            res.redirect("/login")
 
             
         } catch (error) {
@@ -66,10 +65,14 @@ class Controller{
 
                 res.redirect(`/register/patient?err=${data}`)
             }
+            else{
+                console.log(error)
+                res.send(error)
+            }
         }
     }       
 
-    static getregisterpagedoctor(req,res){
+    static async getregisterpagedoctor(req,res){
         try {
             // let data = Doctor.findAll()
             const { err } = req.query
@@ -103,7 +106,7 @@ class Controller{
     }
     
 
-    static getloginpage(req,res){
+    static async getloginpage(req,res){
         try {
             const {err}= req.query
             res.render("login",{err})
@@ -178,7 +181,7 @@ class Controller{
         }
     }
 
-    static logout(req,res){
+    static async logout(req,res){
         try {
             req.session.destroy((err => {
                 if(err){

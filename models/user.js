@@ -14,6 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.AskSuggestion)
     }
+
+    static async createuser(name,email,password,role){
+      try {
+
+        let data = await User.create({name,email,password,role})
+
+        return data
+
+      } catch (error) {
+        throw error
+      }
+    }
   }
   User.init({
     name: {type:DataTypes.STRING,
