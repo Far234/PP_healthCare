@@ -351,13 +351,11 @@ class Controller{
             const {role} = req.params
             
             // console.log(`--------------------------------`,role);
-            // let data = await Doctor.findAll({
-            //     where:{
-            //         role:role
-            //     },include:{
-            //         model:ProfileDoctor
-            //     }
-            // })
+            let data1 = await Doctor.findAll({
+                where:{
+                    role:role
+                }
+            })
             let data = await ProfileDoctor.findAll({
                 include:{
                     model:Doctor,
@@ -367,7 +365,8 @@ class Controller{
                 }
             })
             // res.send(data)
-            res.render("pageAskUser", {data,title:`Form Ask `})
+            // console.log(data);
+            res.render("pageAskUser", {data,data1,title:`Form Ask `})
         } catch (error) {
             console.log(error);
             res.send(error)
@@ -377,7 +376,7 @@ class Controller{
         try {
             const {patientid} = req.session
             let UserId = patientid
-            console.log(``,req.query);
+            // console.log(`----------`,req.body);
             const {asking, DoctorId} = req.body
             await AskSuggestion.create({UserId, asking, DoctorId})
             res.redirect('/user')
